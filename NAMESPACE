@@ -2,6 +2,7 @@
 
 export(alasso)
 export(argos)
+export(build_design_matrix)
 export(cubic2d_system)
 export(duffing_oscillator)
 export(lasso)
