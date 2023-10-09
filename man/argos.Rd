@@ -5,10 +5,10 @@
 \title{Automatic Regression for Governing Equations (ARGOS)}
 \usage{
 argos(
-  x_t,
-  monomial_degree = 5,
-  dt = 1,
-  sg_poly_order = 4,
+  sorted_theta,
+  xdot,
+  monomial_orders,
+  library_type = c("poly", "four", "poly_four"),
   state_var_deriv = 1,
   alpha_level = 0.05,
   num_samples = 2000,
@@ -20,13 +20,13 @@ argos(
 )
 }
 \arguments{
-\item{x_t}{A matrix. The input data.}
+\item{sorted_theta}{A matrix or data frame containing sorted values of the variable 'theta'.}
 
-\item{monomial_degree}{An integer. The maximum degree of the monomials in the design matrix. Default is 5.}
+\item{xdot}{A matrix or data frame containing derivative data.}
 
-\item{dt}{A numeric scalar. The time-step interval of the data. Default is 1.}
+\item{monomial_orders}{A vector indicating the monomial order for each term in the `sorted_theta`.}
 
-\item{sg_poly_order}{A numeric scalar. The order of the polynomial to be used in the Savitzky-Golay filter. Default is 4.}
+\item{library_type}{A character vector (default: c("poly", "four", "poly_four")) specifying the type of library being used.}
 
 \item{state_var_deriv}{An integer. The index of the state variable for which the derivative is calculated. Default is 1.}
 
