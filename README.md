@@ -1,13 +1,28 @@
-# ARGOS-Package
-R package for Automatic Regression of Governing Equations (ARGOS)
-# Automatic Regression for Governing Equations (ARGOS)
+# ARGOS: Automatic Regression for Governing Equations 
+An R package for the identification of dynamical systems.
 
-This Github repository contains codes for the paper _Automatically identifying dynamical systems from data_.
+## Overview
+
+**ARGOS** (Automatic Regression for Governing Equations) provides tools to perform system identification of both linear and nonlinear dynamical systems directly from data.
+Inspired by the research presented in the paper,[_"Automatically identifying dynamical systems from data"_](https://arxiv.org/abs/2304.11182), this package automates the complex task of building mathematical models of dynamical systems using observed input and output signals.
+
+## Key Features
+
+- **System Identification**: Offers tools to derive mathematical models from real-world observations.
+- **Support for Various Systems**: Handles both discrete and continuous dynamical systems, using either ordinary differential equations.
+- **Optimal Numerical Derivatives**: Enhances accuracy and reliability in system identification.
+- **Formal Variable Selection**: Enables automatic discovery of dynamical systems, helping users discern the most relevant variables.
+- **Predictive Capabilities**: Once models are identified, they can be used to generalize and predict behaviors of systems within the data set.
 
 ## Motivation
 
-The purpose of this repository is to enable users to perform system identification of linear and nonlinear systems automatically.
-System identification refers to the process of building mathematical models of dynamical systems using measurements of the input and output signals.
-Dynamical systems can either be discrete or continuous and use ordinary or partial differential equations to describe their time-varying behavior.
-The Automatic Regression for Governing Equations (ARGOS) algorithm combines optimal numerical derivatives with formal variable selection procedures for automatic discovery of dynamical systems from data.
-Upon identification, users can apply the resulting models to generalize and predict the systems existing in their data.
+Modern research and industries demand accurate models of dynamical systems, yet building these models from raw data can be challenging.
+**ARGOS** streamlines this process, automating the identification of both linear and nonlinear systems.
+Whether dealing with discrete or continuous systems described by ordinary differential equations, this package provides the tools needed.
+By combining optimal numerical derivatives with formal variable selection procedures, ARGOS not only aids in the discovery of these systems but also empowers users to apply the resulting models to predict and understand the behaviors present in their data.
+
+## Getting Started
+
+1. **Installation**: Install the package as such: ```r install.packages("ARGOS")```.
+2. **Documentation**: Comprehensive guides and examples to help you get the most out of **ARGOS**.
+3. **Contribution**: Steps to contribute and improve the package.
