@@ -317,6 +317,7 @@ sg_optimal_combination <- function(x_t, dt = 1, polyorder) {
 #'
 #' @param x_t Matrix of observations.
 #' @param dt Time step (default is 1).
+#' @param sg_poly_order Polynomial order for Savitzky-Golay Filter.
 #' @param library_degree Degree of polynomial library (default is 5).
 #' @param library_type Type of library to use. Can be one of "poly", "four", or "poly_four"
 #'
@@ -332,6 +333,7 @@ sg_optimal_combination <- function(x_t, dt = 1, polyorder) {
 #' @importFrom stats polym
 build_design_matrix <- function(x_t,
                                 dt = 1,
+                                sg_poly_order = 4,
                                 library_degree = 5,
                                 library_type = c("poly", "four", "poly_four")) {
   monomial_degree <- library_degree
