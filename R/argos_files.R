@@ -328,6 +328,12 @@ sg_optimal_combination <- function(x_t, dt = 1, polyorder) {
 #'   \item \code{xdot_filtered} - A matrix with derivative terms (dependent variable).
 #' }
 #' @export
+#' @examples
+#' # Build a design matrix using the Duffing Oscillator as the state-space.
+#' # Output provides matrix, monomial orders (needed for running ARGOS), and derivative matrix.
+#' x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), 49)
+#' duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, library_degree = 5, library_type = "poly")
+#' head(duffing_design_matrix$sorted_theta)
 #' @importFrom signal sgolayfilt
 #' @importFrom magrittr %>%
 #' @importFrom stats polym
@@ -490,6 +496,38 @@ build_design_matrix <- function(x_t,
 #'   - identified_model: a matrix of coefficients of the identified model.
 #'
 #' @export
+#' @examples
+#' # Identify the x1 equation of the Duffing Oscillator with ARGOS.
+#' # Output provides point estimates, confidence intervals, and identified model.
+#' x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), 49)
+#' duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, library_degree = 5, library_type = "poly")
+#' sorted_theta <- test_build_design_matrix$sorted_theta
+#' xdot <- test_build_design_matrix$xdot_filtered
+#' monomial_orders <- test_build_design_matrix$monomial_orders
+#' state_var_deriv = 1
+#' alpha_level = 0.05
+#' num_samples = 50
+#' sr_method = "lasso"
+#' weights_method = NULL
+#' ols_ps = TRUE
+#' parallel = "no"
+#' ncpus = NULL
+#' library_type <- "poly"
+#' perform_argos <- argos(sorted_theta = sorted_theta,
+#'                    xdot = xdot,
+#'                    monomial_orders = monomial_degree,
+#'                    library_type = library_type,
+#'                    state_var_deriv = state_var_deriv,
+#'                    alpha_level = alpha_level,
+#'                    num_samples = num_samples,
+#'                    sr_method = "lasso",
+#'                    weights_method = NULL,
+#'                    ols_ps = TRUE,
+#'                    parallel = "no",
+#'                    ncpus = NULL)
+#' perform_argos$point_estimates
+#' perform_argos$ci
+#' perform_argos$identified_model
 #' @import boot
 #' @import tidyverse
 #' @importFrom stats polym

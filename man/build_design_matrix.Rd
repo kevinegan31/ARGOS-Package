@@ -34,3 +34,10 @@ A list with two elements:
 \description{
 This function first smooths the data and approximates the derivative before building the design matrix to include monomial and fourier terms.
 }
+\examples{
+# Build a design matrix using the Duffing Oscillator as the state-space.
+# Output provides matrix, monomial orders (needed for running ARGOS), and derivative matrix.
+x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), 49)
+duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, library_degree = 5, library_type = "poly")
+head(duffing_design_matrix$sorted_theta)
+}
