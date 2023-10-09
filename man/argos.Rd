@@ -59,11 +59,12 @@ the Lasso or Adaptive Lasso for feature selection.
 # Identify the x1 equation of the Duffing Oscillator with ARGOS.
 # Output provides point estimates, confidence intervals, and identified model.
 x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), 49)
-duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, library_degree = 5, library_type = "poly")
-sorted_theta <- test_build_design_matrix$sorted_theta
-xdot <- test_build_design_matrix$xdot_filtered
-monomial_orders <- test_build_design_matrix$monomial_orders
-state_var_deriv = 1
+duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
+                                            library_degree = 5, library_type = "poly")
+sorted_theta <- duffing_design_matrix$sorted_theta
+xdot <- duffing_design_matrix$xdot_filtered
+monomial_orders <- duffing_design_matrix$monomial_orders
+state_var_deriv = 1 # Denotes first equation/derivative to be identified
 alpha_level = 0.05
 num_samples = 50
 sr_method = "lasso"
@@ -74,7 +75,7 @@ ncpus = NULL
 library_type <- "poly"
 perform_argos <- argos(sorted_theta = sorted_theta,
                    xdot = xdot,
-                   monomial_orders = monomial_degree,
+                   monomial_orders = monomial_orders,
                    library_type = library_type,
                    state_var_deriv = state_var_deriv,
                    alpha_level = alpha_level,
