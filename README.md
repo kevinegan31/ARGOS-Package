@@ -24,5 +24,3 @@ By combining optimal numerical derivatives with formal variable selection proced
 ## Getting Started
 
 1. **Installation**: Install the package as such: ```r install.packages("ARGOS")```.
-2. **Documentation**: Comprehensive guides and examples to help you get the most out of **ARGOS**.
-3. **Contribution**: Steps to contribute and improve the package.
