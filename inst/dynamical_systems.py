@@ -187,3 +187,24 @@ def vdp_ode(n_obs, dt, init_conditions, mu, snr):
             )
 
     return x_total
+
+# Lotka-Volterra
+def lotka_volterra_ode(n_obs, dt, init_conditions, snr):
+    params = np.array([1, -1, -1, 1])
+    def lotka_volterra(x, t, a):
+        return[
+            (a[0] * x[0]) + (a[1] * (x[0] * x[1])),
+            (a[2] * x[1]) + (a[3] * (x[0] * x[1])),
+        ]
+    t_span = np.arange(0, float(n_obs) * dt, dt)
+    x_total = odeint(lotka_volterra, init_conditions, t_span, args=(params,))
+    snr_db = 10 ** -(snr / 20)
+    # Add noise (dB)
+    if snr_db != 0:
+        x_init = x_total.copy()
+        for i in range(int(x_total.shape[1])):
+            x_total[:, i] = x_total[:, i] + snr_db * np.random.normal(
+                scale=np.std(x_init[:, i]), size=x_init[:, i].shape
+            )
+
+    return x_total

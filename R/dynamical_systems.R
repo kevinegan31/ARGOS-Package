@@ -112,3 +112,19 @@ rossler_system <- function(n_obs, dt, init_conditions, snr) {
 vdp_oscillator <- function(n_obs, dt, init_conditions, mu, snr) {
   py$vdp_ode(n_obs, dt, init_conditions, mu, snr)
 }
+#' @title Simulate Lotka–Volterra equations, also known as the Lotka–Volterra predator–prey model
+#' @description This function simulates a Lotka–Volterra system. It is a wrapper for the Python function \code{lotka_volterra_ode}, which uses a set of ordinary differential equations (ODEs) to simulate the system. Noise can be added to the system.
+#' @param n_obs A numeric value specifying the number of observations or time points for which you want to simulate the system.
+#' @param dt A numeric value specifying the time step size for the simulation.
+#' @param init_conditions A numeric vector specifying the initial conditions for the simulation. It should contain two elements corresponding to the initial values of the two state variables.
+#' @param snr A numeric value specifying the signal-to-noise ratio in dB. This is used to add noise to the simulation. If \code{snr} equals 0, no noise is added.
+#' @return A matrix where each row corresponds to a time point and each column corresponds to a state variable. The matrix represents the simulated state of the system over time.
+#' @export
+#' @examples
+#' # Simulate a system for 100 time points with a time step size of 0.01,
+#' # initial conditions of c(1, 0) and a signal-to-noise ratio of 49 dB.
+#' sim <- lotka_volterra_system(n_obs=5000, 0.01, c(1, 0), 49)
+#' @importFrom reticulate py_eval
+lotka_volterra_system <- function(n_obs, dt, init_conditions, snr) {
+  py$lotka_volterra_ode(n_obs, dt, init_conditions, snr)
+}
