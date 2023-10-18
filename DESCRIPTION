@@ -14,9 +14,7 @@ Description: ARGOS (Automatic Regression for Governing Equations) provides a com
     differential equations. It employs optimal numerical derivatives for enhanced accuracy and employs formal 
     variable selection techniques to help identify the most relevant variables, thereby enabling the development 
     of predictive models for system behavior analysis.
-Citation: 
-  Egan K, Li W (2023) ARGOS: Automatic Regression for Governing Equations (R package version 0.1.0). 
-  R package retrieved from https://github.com/kevinegan31/ARGOS-Package.
+Citation: Egan K, Li W (2023) ARGOS: Automatic Regression for Governing Equations (R package version 0.1.0). R package retrieved from https://github.com/kevinegan31/ARGOS-Package.
 Depends: 
     R (>= 3.5.0)
 Imports:
@@ -37,7 +35,7 @@ Suggests:
     devtools
 License: GPL-3
 URL: <https://github.com/kevinegan31/ARGOS-Package>
-BugReports: <https://github.com/kevinegan31/ARGOS-Package/issues>
+Contact: Please report bugs and other issues to <kevin.egan@durham.ac.uk>.
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
