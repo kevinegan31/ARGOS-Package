@@ -4,9 +4,9 @@ Title: Automatic Regression for Governing Equations (ARGOS)
 Version: 0.1.0
 Authors@R: c(
     person("Kevin", "Egan", email = "kevin.egan@durham.ac.uk", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9748-8687")),
-    person("Weizhen", "Li", role = "aut", comment = c(ORCID = "0000-0001-9368-236X"))
+    person("Weizhen", "Li", email = "weizhen.li@durham.ac.uk", role = "aut", comment = c(ORCID = "0000-0001-9368-236X"))
     )
-Maintainer: Kevin Egan <kevin.egan@durham.ac.uk>
+Maintainer: Kevin Egan <kevin.egan@durham.ac.uk>, Weizhen Li <weizhen.li@durham.ac.uk>
 Description: ARGOS (Automatic Regression for Governing Equations) provides a comprehensive set of tools 
     for performing system identification of both linear and nonlinear dynamical systems directly from data. 
     ARGOS simplifies the complex task of constructing mathematical models of dynamical systems from 
@@ -14,9 +14,8 @@ Description: ARGOS (Automatic Regression for Governing Equations) provides a com
     differential equations. It employs optimal numerical derivatives for enhanced accuracy and employs formal 
     variable selection techniques to help identify the most relevant variables, thereby enabling the development 
     of predictive models for system behavior analysis.
-Citation: Egan K, Li W (2023) ARGOS: Automatic Regression for Governing Equations (R package version 0.1.0). R package retrieved from https://github.com/kevinegan31/ARGOS-Package.
 Depends: 
-    R (>= 3.5.0)
+    R (>= 3.6.0)
 Imports:
   Matrix,
   reticulate,
