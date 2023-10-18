@@ -2,7 +2,7 @@
 % Please edit documentation in R/dynamical_systems.R
 \name{duffing_oscillator}
 \alias{duffing_oscillator}
-\title{Simulate a Duffing Oscillator}
+\title{Simulate the Duffing Oscillator}
 \usage{
 duffing_oscillator(n_obs, dt, init_conditions, snr)
 }

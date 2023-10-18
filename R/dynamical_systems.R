@@ -15,7 +15,7 @@
 cubic2d_system <- function(n_obs, dt, init_conditions, snr) {
   py$cubic2d_ode(n_obs, dt, init_conditions, snr)
 }
-#' @title Simulate a Duffing Oscillator
+#' @title Simulate the Duffing Oscillator
 #' @description This function simulates a duffing system. It is a wrapper for the Python function \code{duffing_ode}, which uses a set of ordinary differential equations (ODEs) to simulate the system. Noise can be added to the system.
 #' @param n_obs A numeric value specifying the number of observations or time points for which you want to simulate the system.
 #' @param dt A numeric value specifying the time step size for the simulation.

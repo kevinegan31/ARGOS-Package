@@ -504,7 +504,7 @@ build_design_matrix <- function(x_t,
 #' design_matrix <- duffing_design_matrix
 #' state_var_deriv = 1 # Denotes first equation/derivative to be identified
 #' alpha_level = 0.05
-#' num_samples = 50
+#' num_samples = 10
 #' sr_method = "lasso"
 #' weights_method = NULL
 #' ols_ps = TRUE

@@ -58,7 +58,7 @@ duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
 design_matrix <- duffing_design_matrix
 state_var_deriv = 1 # Denotes first equation/derivative to be identified
 alpha_level = 0.05
-num_samples = 50
+num_samples = 10
 sr_method = "lasso"
 weights_method = NULL
 ols_ps = TRUE
