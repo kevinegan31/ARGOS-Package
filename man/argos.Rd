@@ -5,9 +5,7 @@
 \title{Automatic Regression for Governing Equations (ARGOS)}
 \usage{
 argos(
-  sorted_theta,
-  xdot,
-  monomial_orders,
+  design_matrix,
   library_type = c("poly", "four", "poly_four"),
   state_var_deriv = 1,
   alpha_level = 0.05,
@@ -20,11 +18,7 @@ argos(
 )
 }
 \arguments{
-\item{sorted_theta}{A matrix or data frame containing sorted values of the variable 'theta'.}
-
-\item{xdot}{A matrix or data frame containing derivative data.}
-
-\item{monomial_orders}{A vector indicating the monomial order for each term in the `sorted_theta`.}
+\item{design_matrix}{A list containing data frame, derivative matrix, and vector of predictor variable orders for 'theta'.}
 
 \item{library_type}{A character vector (default: c("poly", "four", "poly_four")) specifying the type of library being used.}
 
@@ -51,9 +45,9 @@ A list with three elements:
   - identified_model: a matrix of coefficients of the identified model.
 }
 \description{
-This function performs sparse regression on a dataset to identify the governing equations
-of the system. It uses the Savitzky-Golay filter to preprocess the data and then applies
-the Lasso or Adaptive Lasso for feature selection.
+This function performs sparse regression on a data set to identify the governing equations
+of the system. It takes a list of data from `build_design_matrix` then applies
+the Lasso or Adaptive Lasso for variable selection.
 }
 \examples{
 # Identify the x1 equation of the Duffing Oscillator with ARGOS.
@@ -61,9 +55,7 @@ the Lasso or Adaptive Lasso for feature selection.
 x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), 49)
 duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
                                             library_degree = 5, library_type = "poly")
-sorted_theta <- duffing_design_matrix$sorted_theta
-xdot <- duffing_design_matrix$xdot_filtered
-monomial_orders <- duffing_design_matrix$monomial_orders
+design_matrix <- duffing_design_matrix
 state_var_deriv = 1 # Denotes first equation/derivative to be identified
 alpha_level = 0.05
 num_samples = 50
@@ -73,9 +65,7 @@ ols_ps = TRUE
 parallel = "no"
 ncpus = NULL
 library_type <- "poly"
-perform_argos <- argos(sorted_theta = sorted_theta,
-                   xdot = xdot,
-                   monomial_orders = monomial_orders,
+perform_argos <- argos(design_matrix = design_matrix,
                    library_type = library_type,
                    state_var_deriv = state_var_deriv,
                    alpha_level = alpha_level,

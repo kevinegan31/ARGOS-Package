@@ -330,7 +330,7 @@ sg_optimal_combination <- function(x_t, dt = 1, polyorder) {
 #' @export
 #' @examples
 #' # Build a design matrix using the Duffing Oscillator as the state-space.
-#' # Output provides matrix, monomial orders (needed for running ARGOS), and derivative matrix.
+#' # Output provides matrix, and derivative matrix monomial orders (needed for running `argos`).
 #' x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), 49)
 #' duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
 #'                                             library_degree = 5, library_type = "poly")
@@ -474,9 +474,9 @@ build_design_matrix <- function(x_t,
 }
 #' Automatic Regression for Governing Equations (ARGOS)
 #'
-#' This function performs sparse regression on a dataset to identify the governing equations
-#' of the system. It uses the Savitzky-Golay filter to preprocess the data and then applies
-#' the Lasso or Adaptive Lasso for feature selection.
+#' This function performs sparse regression on a data set to identify the governing equations
+#' of the system. It takes a list of data from `build_design_matrix` then applies
+#' the Lasso or Adaptive Lasso for variable selection.
 #'
 #' @param design_matrix A list containing data frame, derivative matrix, and vector of predictor variable orders for 'theta'.
 #' @param library_type A character vector (default: c("poly", "four", "poly_four")) specifying the type of library being used.
