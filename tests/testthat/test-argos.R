@@ -85,5 +85,5 @@ test_that("argos returns a list with the correct components", {
   expect_named(perform_argos, c("point_estimates", "ci", "identified_model"))
 })
 
-# This command initiates the execution of all tests included in this script, using the ARGOS package.
-test_check("ARGOS")
+# # This command initiates the execution of all tests included in this script, using the ARGOS package.
+# test_check("ARGOS")
