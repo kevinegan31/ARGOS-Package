@@ -6,7 +6,7 @@ Authors@R: c(
     person("Kevin", "Egan", email = "kevin.egan@durham.ac.uk", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9748-8687")),
     person("Weizhen", "Li", email = "weizhen.li@durham.ac.uk", role = "aut", comment = c(ORCID = "0000-0001-9368-236X"))
     )
-Maintainer: Kevin Egan <kevin.egan@durham.ac.uk>, Weizhen Li <weizhen.li@durham.ac.uk>
+Maintainer: Kevin Egan <kevin.egan@durham.ac.uk>
 Description: ARGOS (Automatic Regression for Governing Equations) provides a comprehensive set of tools 
     for performing system identification of both linear and nonlinear dynamical systems directly from data. 
     ARGOS simplifies the complex task of constructing mathematical models of dynamical systems from 
