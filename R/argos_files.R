@@ -478,7 +478,7 @@ build_design_matrix <- function(x_t,
 #' of the system. It takes a list of data from `build_design_matrix` then applies
 #' the Lasso or Adaptive Lasso for variable selection.
 #'
-#' @param design_matrix A list containing data frame, derivative matrix, and vector of predictor variable orders for 'theta'.
+#' @param design_matrix A list containing data frame, vector of predictor variable orders for 'theta', and derivative matrix.
 #' @param library_type A character vector (default: c("poly", "four", "poly_four")) specifying the type of library being used.
 #' @param state_var_deriv An integer. The index of the state variable for which the derivative is calculated. Default is 1.
 #' @param alpha_level A numeric scalar. The level of significance for confidence intervals. Default is 0.05.
@@ -540,8 +540,8 @@ argos <- function(design_matrix,
                   ncpus = NULL) {
   # Unpack design matrix
   sorted_theta <- design_matrix$sorted_theta
-  xdot <- design_matrix$xdot
   monomial_orders <- design_matrix$monomial_orders
+  xdot <- design_matrix$xdot
   parallel <- match.arg(parallel)  # add this line
   sr_method <- match.arg(sr_method)  # add this line
   # Check if parallel processing is requested

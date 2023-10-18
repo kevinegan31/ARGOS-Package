@@ -2,10 +2,18 @@ Package: ARGOS
 Type: Package
 Title: Automatic Regression for Governing Equations (ARGOS)
 Version: 0.1.0
-Author: Kevin Egan, Weizhen Li
+Authors@R: c(
+    person("Kevin", "Egan", email = "kevin.egan@durham.ac.uk", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9748-8687")),
+    person("Weizhen", "Li", role = "aut", comment = c(ORCID = "0000-0001-9368-236X"))
+    )
 Maintainer: Kevin Egan <kevin.egan@durham.ac.uk>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: ARGOS (Automatic Regression for Governing Equations) provides a comprehensive set of tools 
+    for performing system identification of both linear and nonlinear dynamical systems directly from data. 
+    This package simplifies the complex task of constructing mathematical models of dynamical systems from 
+    observed input and output data, supporting various types of systems, including those described by ordinary 
+    differential equations. It employs optimal numerical derivatives for enhanced accuracy and employs formal 
+    variable selection techniques to help identify the most relevant variables, thereby enabling the development 
+    of predictive models for system behavior analysis.
 Depends: 
     R (>= 3.5.0)
 Imports:
@@ -19,7 +27,14 @@ Imports:
   tidyr,
   signal,
   parallel
-License: Unlimited
+Suggests: 
+    testthat,
+    knitr,
+    rmarkdown
+License: GPL-3
+URL: https://github.com/kevinegan31/ARGOS-Package
+BugReports: https://github.com/kevinegan31/ARGOS-Package/issues
+VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
