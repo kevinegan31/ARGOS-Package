@@ -27,10 +27,11 @@ Imports:
   tidyr,
   signal,
   parallel
-Suggests: 
+Suggests:
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    devtools
 License: GPL-3
 URL: https://github.com/kevinegan31/ARGOS-Package
 BugReports: https://github.com/kevinegan31/ARGOS-Package/issues

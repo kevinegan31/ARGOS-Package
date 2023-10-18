@@ -18,7 +18,7 @@ argos(
 )
 }
 \arguments{
-\item{design_matrix}{A list containing data frame, derivative matrix, and vector of predictor variable orders for 'theta'.}
+\item{design_matrix}{A list containing data frame, vector of predictor variable orders for 'theta', and derivative matrix.}
 
 \item{library_type}{A character vector (default: c("poly", "four", "poly_four")) specifying the type of library being used.}
 
