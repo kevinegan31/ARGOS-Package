@@ -69,8 +69,8 @@ def linear2d_ode(n_obs, dt, init_conditions, snr):
     def linear2d(x_t, time, parameters):
         """Two-dimensional damped harmonic oscillator with linear dynamics"""
         return [
-            parameters[0] * x_t[0] + parameters[1] * parameters[1],
-            parameters[2] * x_t[0] + parameters[3] * parameters[1],
+            parameters[0] * x_t[0] + parameters[1] * x_t[1],
+            parameters[2] * x_t[0] + parameters[3] * x_t[1],
         ]
     t_span = np.arange(0, float(n_obs) * dt, dt)
     x_total = odeint(linear2d, init_conditions, t_span, args=(linear2d_params,))
