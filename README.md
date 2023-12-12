@@ -4,7 +4,7 @@ An R package for the identification of dynamical systems.
 ## Overview
 
 **ARGOS** (Automatic Regression for Governing Equations) provides tools to perform system identification of both linear and nonlinear dynamical systems directly from data.
-Inspired by the research presented in the paper,[_"Automatically identifying dynamical systems from data"_](https://arxiv.org/abs/2304.11182), this package automates the complex task of building mathematical models of dynamical systems using observed input and output signals.
+Inspired by the research presented in the paper,[_"Automatically discovering ordinary differential equations from data"_](https://arxiv.org/abs/2304.11182), this package automates the complex task of building mathematical models of dynamical systems using observed input and output signals.
 
 ## Code for Research Article
 
