@@ -17,7 +17,7 @@ linear3d_system(n, init_conditions, dt, snr = Inf)
 }
 \value{
 A numeric matrix representing the system's state over time. Each row
-  corresponds to a time point, and each column represents a variable.
+        corresponds to a time point, and each column represents a variable.
 }
 \description{
 Simulates a three-dimensional linear dynamical system with optional noise.
@@ -31,6 +31,5 @@ the system.
 \examples{
 # Simulate a 3D linear system with 100 time points and no noise
 data <- linear3d_system(n = 100, init_conditions = c(1, 2, 3), dt = 0.01, snr = Inf)
-
 
 }

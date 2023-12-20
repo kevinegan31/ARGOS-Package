@@ -21,24 +21,35 @@ build_design_matrix(
 
 \item{library_degree}{Degree of polynomial library (default is 5).}
 
-\item{library_type}{Type of library to use. Can be one of "poly", "four", or "poly_four"}
+\item{library_type}{Type of library to use. Can be one of "poly",
+"four", or "poly_four".}
 }
 \value{
 A list with two elements:
 \itemize{
-  \item \code{sorted_theta} - A matrix with sorted polynomial/trigonometric terms.
-  \item \code{monomial_orders} - A vector indicating the order of each polynomial term.
-  \item \code{xdot_filtered} - A matrix with derivative terms (dependent variable).
+  \item \code{sorted_theta} - A matrix with sorted polynomial/trigonometric
+        terms.
+  \item \code{monomial_orders} - A vector indicating the order of each
+        polynomial term.
+  \item \code{xdot_filtered} - A matrix with derivative terms
+        (dependent variable).
 }
 }
 \description{
-This function first smooths the data and approximates the derivative before building the design matrix to include monomial and fourier terms.
+This function first smooths the data and approximates the
+derivative before building the design matrix to include monomial and fourier
+terms.
 }
 \examples{
 # Build a design matrix using the Duffing Oscillator as the state-space.
-# Output provides matrix, and derivative matrix monomial orders (needed for running `argos`).
-x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), gamma_value = 0.1, kappa_value = 1, epsilon_value = 5, snr = 49)
-duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
-                                            library_degree = 5, library_type = "poly")
+# Output provides matrix, and derivative matrix monomial orders
+# (needed for running `argos`).
+x_t <- duffing_oscillator(n=5000, dt = 0.01,
+                          init_conditions = c(1, 0),
+                          gamma_value = 0.1, kappa_value = 1,
+                          epsilon_value = 5, snr = 49)
+duffing_design_matrix <-
+         build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
+                             library_degree = 5, library_type = "poly")
 head(duffing_design_matrix$sorted_theta)
 }

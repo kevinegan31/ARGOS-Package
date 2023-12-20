@@ -3,11 +3,18 @@
 #' This function performs lasso regression using the cv.glmnet function,
 #' then refits the model using ordinary least squares.
 #'
-#' @param data A data frame or matrix containing the predictors and response. The response must be in the first column.
-#' @param index A numeric vector of indices indicating the rows of 'data' to use for the lasso regression.
-#' @param ols_ps A logical scalar. If TRUE (default), the function returns the coefficients from the OLS fit. If FALSE, it returns the coefficients from the lasso fit.
+#' @param data A data frame or matrix containing the predictors and response.
+#'             The response must be in the first column.
+#' @param index A numeric vector of indices indicating the rows of 'data' to
+#'              use for the lasso regression.
+#' @param ols_ps A logical scalar. If TRUE (default), the function returns the
+#'               coefficients from the OLS fit. If FALSE, it returns the
+#'               coefficients from the lasso fit.
 #'
-#' @return A numeric vector of coefficients. If 'ols_ps' is TRUE, these are the coefficients from the OLS fit. If 'ols_ps' is FALSE, these are the coefficients from the lasso fit. If an error occurs during the lasso or OLS fit, the function returns a vector of NAs.
+#' @return A numeric vector of coefficients. If 'ols_ps' is TRUE, these are the
+#'         coefficients from the OLS fit. If 'ols_ps' is FALSE, these are the
+#'         coefficients from the lasso fit. If an error occurs during the lasso
+#'         or OLS fit, the function returns a vector of NAs.
 #'
 #' @export
 #' @import Matrix
@@ -99,14 +106,24 @@ lasso <- function(data, index, ols_ps = TRUE) {
 }
 #' Adaptive Lasso
 #'
-#' This function performs adaptive lasso regression using the cv.glmnet function, then refits the model using ordinary least squares.
+#' This function performs adaptive lasso regression using the cv.glmnet function,
+#' then refits the model using ordinary least squares.
 #'
-#' @param data A data frame or matrix containing the predictors and response. The response must be in the first column.
-#' @param index A numeric vector of indices indicating the rows of 'data' to use for the adaptive lasso regression.
-#' @param weights_method A character string specifying the method to calculate the weights. Can be either "ols" or "ridge". Default is "ols".
-#' @param ols_ps A logical scalar. If TRUE (default), the function returns the coefficients from the OLS fit. If FALSE, it returns the coefficients from the lasso fit.
+#' @param data A data frame or matrix containing the predictors and response.
+#'             The response must be in the first column.
+#' @param index A numeric vector of indices indicating the rows of 'data' to use
+#'              for the adaptive lasso regression.
+#' @param weights_method A character string specifying the method to calculate
+#'                       the weights. Can be either "ols" or "ridge". Default
+#'                       is "ols".
+#' @param ols_ps A logical scalar. If TRUE (default), the function returns the
+#'               coefficients from the OLS fit. If FALSE, it returns the
+#'               coefficients from the lasso fit.
 #'
-#' @return A numeric vector of coefficients. If 'ols_ps' is TRUE, these are the coefficients from the OLS fit. If 'ols_ps' is FALSE, these are the coefficients from the lasso fit. If an error occurs during the lasso or OLS fit, the function returns a vector of NAs.
+#' @return A numeric vector of coefficients. If 'ols_ps' is TRUE, these are the
+#'         coefficients from the OLS fit. If 'ols_ps' is FALSE, these are the
+#'         coefficients from the lasso fit. If an error occurs during the lasso
+#'         or OLS fit, the function returns a vector of NAs.
 #'
 #' @export
 #' @import Matrix
@@ -242,16 +259,23 @@ alasso <-
   }
 #' Optimal Savitzky-Golay Filter Parameters Finder
 #'
-#' This function finds the optimal parameters for the Savitzky-Golay filter by evaluating combinations of polynomial orders and window lengths.
+#' This function finds the optimal parameters for the Savitzky-Golay filter
+#' by evaluating combinations of polynomial orders and window lengths.
 #'
 #' @param x_t A numeric vector or one-column matrix. The data to be smoothed.
 #' @param dt A numeric scalar. The time-step interval of the data. Default is 1.
-#' @param polyorder A numeric scalar. The order of the polynomial to be used in the Savitzky-Golay filter. If not specified, 4 will be used by default.
+#' @param polyorder A numeric scalar. The order of the polynomial to be used in
+#'                  the Savitzky-Golay filter. If not specified, 4 will be used
+#'                  by default.
 #'
 #' @return A list with three elements:
-#'   - sg_combinations: a matrix where each row represents a combination of polynomial order and window length tried.
-#'   - sg_order_wl: a vector of length 2 with the optimal polynomial order and window length.
-#'   - f_dist: a data frame with the mean squared error of the differences between the original data and the smoothed data for each combination.
+#'   - sg_combinations: a matrix where each row represents a combination of
+#'                      polynomial order and window length tried.
+#'   - sg_order_wl: a vector of length 2 with the optimal polynomial order and
+#'                  window length.
+#'   - f_dist: a data frame with the mean squared error of the differences
+#'             between the original data and the smoothed data for each
+#'             combination.
 #'
 #' @export
 #' @import signal
@@ -310,30 +334,40 @@ sg_optimal_combination <- function(x_t, dt = 1, polyorder) {
     )
   )
 }
-
 #' Build Design Matrix
 #'
-#' This function first smooths the data and approximates the derivative before building the design matrix to include monomial and fourier terms.
+#' This function first smooths the data and approximates the
+#' derivative before building the design matrix to include monomial and fourier
+#' terms.
 #'
 #' @param x_t Matrix of observations.
 #' @param dt Time step (default is 1).
 #' @param sg_poly_order Polynomial order for Savitzky-Golay Filter.
 #' @param library_degree Degree of polynomial library (default is 5).
-#' @param library_type Type of library to use. Can be one of "poly", "four", or "poly_four"
+#' @param library_type Type of library to use. Can be one of "poly",
+#'                     "four", or "poly_four".
 #'
 #' @return A list with two elements:
 #' \itemize{
-#'   \item \code{sorted_theta} - A matrix with sorted polynomial/trigonometric terms.
-#'   \item \code{monomial_orders} - A vector indicating the order of each polynomial term.
-#'   \item \code{xdot_filtered} - A matrix with derivative terms (dependent variable).
+#'   \item \code{sorted_theta} - A matrix with sorted polynomial/trigonometric
+#'         terms.
+#'   \item \code{monomial_orders} - A vector indicating the order of each
+#'         polynomial term.
+#'   \item \code{xdot_filtered} - A matrix with derivative terms
+#'         (dependent variable).
 #' }
 #' @export
 #' @examples
 #' # Build a design matrix using the Duffing Oscillator as the state-space.
-#' # Output provides matrix, and derivative matrix monomial orders (needed for running `argos`).
-#' x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), gamma_value = 0.1, kappa_value = 1, epsilon_value = 5, snr = 49)
-#' duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
-#'                                             library_degree = 5, library_type = "poly")
+#' # Output provides matrix, and derivative matrix monomial orders
+#' # (needed for running `argos`).
+#' x_t <- duffing_oscillator(n=5000, dt = 0.01,
+#'                           init_conditions = c(1, 0),
+#'                           gamma_value = 0.1, kappa_value = 1,
+#'                           epsilon_value = 5, snr = 49)
+#' duffing_design_matrix <-
+#'          build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
+#'                              library_degree = 5, library_type = "poly")
 #' head(duffing_design_matrix$sorted_theta)
 #' @importFrom signal sgolayfilt
 #' @importFrom magrittr %>%
@@ -474,33 +508,51 @@ build_design_matrix <- function(x_t,
 }
 #' Automatic Regression for Governing Equations (ARGOS)
 #'
-#' This function performs sparse regression on a data set to identify the governing equations
-#' of the system. It takes a list of data from `build_design_matrix` then applies
-#' the Lasso or Adaptive Lasso for variable selection.
+#' This function performs sparse regression on a data set to identify the
+#' governing equations of the system. It takes a list of data from
+#' `build_design_matrix` then applies the Lasso or Adaptive Lasso for variable
+#' selection.
 #'
-#' @param design_matrix A list containing data frame, vector of predictor variable orders for 'theta', and derivative matrix.
-#' @param library_type A character vector (default: c("poly", "four", "poly_four")) specifying the type of library being used.
-#' @param state_var_deriv An integer. The index of the state variable for which the derivative is calculated. Default is 1.
-#' @param alpha_level A numeric scalar. The level of significance for confidence intervals. Default is 0.05.
-#' @param num_samples An integer. The number of bootstrap samples. Default is 2000.
-#' @param sr_method A character string. The sparse regression method to be used, either "lasso" or "alasso". Default is "lasso".
-#' @param weights_method A string or NULL. The method for calculating weights in the Adaptive Lasso. If NULL, ridge regression pilot estimates are used. Default is NULL.
-#' @param ols_ps A logical. If TRUE, post-selection OLS is performed after the Lasso or Adaptive Lasso. Default is TRUE.
-#' @param parallel A character string. The type of parallel computation to be used, either "no", "multicore" or "snow". Default is "no".
-#' @param ncpus An integer or NULL. The number of cores to be used in parallel computation. If NULL, the function will try to detect the number of cores. Default is NULL.
+#' @param design_matrix A list containing data frame, vector of predictor
+#'                      variable orders for 'theta', and derivative matrix.
+#' @param library_type A character vector (default: c("poly", "four",
+#'                      "poly_four")) specifying the type of library being used.
+#' @param state_var_deriv An integer. The index of the state variable for which
+#'                        the derivative is calculated. Default is 1.
+#' @param alpha_level A numeric scalar. The level of significance for
+#'                    confidence intervals. Default is 0.05.
+#' @param num_samples An integer. The number of bootstrap samples. Default is
+#'                    2000.
+#' @param sr_method A character string. The sparse regression method to be used,
+#'                  either "lasso" or "alasso". Default is "lasso".
+#' @param weights_method A string or NULL. The method for calculating weights in
+#'                       the Adaptive Lasso. If NULL, ridge regression pilot
+#'                       estimates are used. Default is NULL.
+#' @param ols_ps A logical. If TRUE, post-selection OLS is performed after the
+#'               Lasso or Adaptive Lasso. Default is TRUE.
+#' @param parallel A character string. The type of parallel computation to be
+#'                 used, either "no", "multicore" or "snow". Default is "no".
+#' @param ncpus An integer or NULL. The number of cores to be used in parallel
+#'              computation. If NULL, the function will try to detect the
+#'              number of cores. Default is NULL.
 #'
 #' @return A list with three elements:
 #'   - point_estimates: a vector of point estimates for the coefficients.
-#'   - ci: a matrix where each column represents the lower and upper bounds of the confidence interval for a coefficient.
+#'   - ci: a matrix where each column represents the lower and upper bounds of
+#'         the confidence interval for a coefficient.
 #'   - identified_model: a matrix of coefficients of the identified model.
 #'
 #' @export
 #' @examples
 #' # Identify the x1 equation of the Duffing Oscillator with ARGOS.
 #' # Output provides point estimates, confidence intervals, and identified model.
-#' x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), 49)
-#' duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
-#'                                             library_degree = 5, library_type = "poly")
+#' x_t <- duffing_oscillator(n=5000, dt = 0.01,
+#'                           init_conditions = c(1, 0),
+#'                           gamma_value = 0.1, kappa_value = 1,
+#'                           epsilon_value = 5, snr = 49)
+#' duffing_design_matrix <-
+#'        build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
+#'                            library_degree = 5, library_type = "poly")
 #' design_matrix <- duffing_design_matrix
 #' state_var_deriv = 1 # Denotes first equation/derivative to be identified
 #' alpha_level = 0.05
@@ -512,15 +564,15 @@ build_design_matrix <- function(x_t,
 #' ncpus = NULL
 #' library_type <- "poly"
 #' perform_argos <- argos(design_matrix = design_matrix,
-#'                    library_type = library_type,
-#'                    state_var_deriv = state_var_deriv,
-#'                    alpha_level = alpha_level,
-#'                    num_samples = num_samples,
-#'                    sr_method = "lasso",
-#'                    weights_method = NULL,
-#'                    ols_ps = TRUE,
-#'                    parallel = "no",
-#'                    ncpus = NULL)
+#'                        library_type = library_type,
+#'                        state_var_deriv = state_var_deriv,
+#'                        alpha_level = alpha_level,
+#'                        num_samples = num_samples,
+#'                        sr_method = "lasso",
+#'                        weights_method = NULL,
+#'                        ols_ps = TRUE,
+#'                        parallel = "no",
+#'                        ncpus = NULL)
 #' perform_argos$point_estimates
 #' perform_argos$ci
 #' perform_argos$identified_model
@@ -678,7 +730,8 @@ argos <- function(design_matrix,
 }
 #' Cubic 2D System Simulation
 #'
-#' Simulates a two-dimensional damped oscillator with cubic dynamics and optional noise.
+#' Simulates a two-dimensional damped oscillator with cubic dynamics and optional
+#' noise.
 #'
 #' @param n Number of time points (rounded to the nearest integer).
 #' @param init_conditions Initial conditions as a numeric vector of length 2.
@@ -686,12 +739,11 @@ argos <- function(design_matrix,
 #' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
 #'
 #' @return A numeric matrix representing the system's state over time. Each row
-#'   corresponds to a time point, and each column represents a variable.
+#'         corresponds to a time point, and each column represents a variable.
 #'
 #' @examples
 #' # Simulate a 2D cubic system with 100 time points and no noise
 #' data <- cubic2d_system(n = 100, init_conditions = c(1, 2), dt = 0.01, snr = Inf)
-#'
 #'
 #' @details
 #' This function simulates a two-dimensional damped oscillator with cubic dynamics.
@@ -699,8 +751,9 @@ argos <- function(design_matrix,
 #' state over time. If a non-Infinite SNR is provided, Gaussian noise is added to
 #' the system.
 #'
-#'
 #' @import deSolve
+#' @importFrom stats sd
+#' @importFrom stats rnorm
 #' @export
 cubic2d_system <- function(n, init_conditions, dt, snr = Inf) {
   n <- round(n, 0)
@@ -735,7 +788,8 @@ cubic2d_system <- function(n, init_conditions, dt, snr = Inf) {
 }
 #' Linear 2D System Simulation
 #'
-#' Simulates a two-dimensional damped oscillator with linear dynamics and optional noise.
+#' Simulates a two-dimensional damped oscillator with linear dynamics and optional
+#' noise.
 #'
 #' @param n Number of time points (rounded to the nearest integer).
 #' @param init_conditions Initial conditions as a numeric vector of length 2.
@@ -743,12 +797,11 @@ cubic2d_system <- function(n, init_conditions, dt, snr = Inf) {
 #' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
 #'
 #' @return A numeric matrix representing the system's state over time. Each row
-#'   corresponds to a time point, and each column represents a variable.
+#'         corresponds to a time point, and each column represents a variable.
 #'
 #' @examples
 #' # Simulate a 2D linear system with 100 time points and no noise
 #' data <- linear2d_system(n = 100, init_conditions = c(-1, 1), dt = 0.01, snr = Inf)
-#'
 #'
 #' @details
 #' This function simulates a two-dimensional damped oscillator with linear dynamics.
@@ -756,8 +809,9 @@ cubic2d_system <- function(n, init_conditions, dt, snr = Inf) {
 #' state over time. If a non-Infinite SNR is provided, Gaussian noise is added to
 #' the system.
 #'
-#'
 #' @import deSolve
+#' @importFrom stats sd
+#' @importFrom stats rnorm
 #' @export
 linear2d_system <- function(n, init_conditions, dt, snr = Inf) {
   n <- round(n, 0)
@@ -800,12 +854,11 @@ linear2d_system <- function(n, init_conditions, dt, snr = Inf) {
 #' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
 #'
 #' @return A numeric matrix representing the system's state over time. Each row
-#'   corresponds to a time point, and each column represents a variable.
+#'         corresponds to a time point, and each column represents a variable.
 #'
 #' @examples
 #' # Simulate a 3D linear system with 100 time points and no noise
 #' data <- linear3d_system(n = 100, init_conditions = c(1, 2, 3), dt = 0.01, snr = Inf)
-#'
 #'
 #' @details
 #' This function simulates a three-dimensional linear dynamical system.
@@ -814,6 +867,8 @@ linear2d_system <- function(n, init_conditions, dt, snr = Inf) {
 #' the system.
 #'
 #' @import deSolve
+#' @importFrom stats sd
+#' @importFrom stats rnorm
 #' @export
 linear3d_system <- function(n, init_conditions, dt, snr = Inf)  {
   n <- round(n, 0)
@@ -861,7 +916,7 @@ linear3d_system <- function(n, init_conditions, dt, snr = Inf)  {
 #' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
 #'
 #' @return A numeric matrix representing the system's state over time. Each row
-#'   corresponds to a time point, and each column represents a variable.
+#'         corresponds to a time point, and each column represents a variable.
 #'
 #' @examples
 #' # Simulate a Duffing oscillator with 100 time points and no noise
@@ -875,7 +930,6 @@ linear3d_system <- function(n, init_conditions, dt, snr = Inf)  {
 #'   snr = Inf
 #' )
 #'
-#'
 #' @details
 #' This function simulates a Duffing oscillator with the specified parameters.
 #' It uses the specified time step and initial conditions to compute the system's
@@ -883,6 +937,8 @@ linear3d_system <- function(n, init_conditions, dt, snr = Inf)  {
 #' the system.
 #'
 #' @import deSolve
+#' @importFrom stats sd
+#' @importFrom stats rnorm
 #' @export
 duffing_oscillator <-
   function(n,
@@ -943,7 +999,7 @@ duffing_oscillator <-
 #' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
 #'
 #' @return A numeric matrix representing the system's state over time. Each row
-#'   corresponds to a time point, and each column represents a variable.
+#'         corresponds to a time point, and each column represents a variable.
 #'
 #' @examples
 #' # Simulate a Van der Pol oscillator with 100 time points and no noise
@@ -955,7 +1011,6 @@ duffing_oscillator <-
 #'   snr = Inf
 #' )
 #'
-#'
 #' @details
 #' This function simulates a Van der Pol oscillator with the specified parameters.
 #' It uses the specified time step and initial conditions to compute the system's
@@ -963,6 +1018,8 @@ duffing_oscillator <-
 #' the system.
 #'
 #' @import deSolve
+#' @importFrom stats sd
+#' @importFrom stats rnorm
 #' @export
 vdp_oscillator <- function(n, dt, init_conditions, mu, snr = Inf) {
   n <- round(n, 0)
@@ -1012,7 +1069,7 @@ vdp_oscillator <- function(n, dt, init_conditions, mu, snr = Inf) {
 #' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
 #'
 #' @return A numeric matrix representing the system's state over time. Each row
-#'   corresponds to a time point, and each column represents a variable.
+#'         corresponds to a time point, and each column represents a variable.
 #'
 #' @examples
 #' # Simulate a Lotka-Volterra system with 100 time points and no noise
@@ -1023,15 +1080,15 @@ vdp_oscillator <- function(n, dt, init_conditions, mu, snr = Inf) {
 #'   snr = Inf
 #' )
 #'
-#'
 #' @details
-#' This function simulates the Lotka-Volterra predator-prey system with the specified
-#' parameters. It uses the specified time step and initial conditions to compute
-#' the system's state over time. If a non-Infinite SNR is provided, Gaussian noise
-#' is added to the system.
-#'
+#' This function simulates the Lotka-Volterra predator-prey system with the
+#' specified parameters. It uses the specified time step and initial conditions
+#' to compute the system's state over time. If a non-Infinite SNR is provided,
+#' Gaussian noise is added to the system.
 #'
 #' @import deSolve
+#' @importFrom stats sd
+#' @importFrom stats rnorm
 #' @export
 lotka_volterra <- function(n, init_conditions, dt, snr = Inf) {
   n <- round(n, 0)
@@ -1073,7 +1130,7 @@ lotka_volterra <- function(n, init_conditions, dt, snr = Inf) {
 #' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
 #'
 #' @return A numeric matrix representing the system's state over time. Each row
-#'   corresponds to a time point, and each column represents a variable (X, Y, Z).
+#'         corresponds to a time point, and each column represents a variable (X, Y, Z).
 #'
 #' @examples
 #' # Simulate the Lorenz system with 1000 time points and no noise
@@ -1084,15 +1141,15 @@ lotka_volterra <- function(n, init_conditions, dt, snr = Inf) {
 #'   snr = Inf
 #' )
 #'
-#'
 #' @details
 #' This function simulates the Lorenz chaotic system with the specified
 #' parameters. It uses the specified time step and initial conditions to compute
 #' the system's state over time. If a non-Infinite SNR is provided, Gaussian noise
 #' is added to the system.
 #'
-#'
 #' @import deSolve
+#' @importFrom stats sd
+#' @importFrom stats rnorm
 #' @export
 lorenz_system <- function(n, init_conditions, dt, snr = Inf) {
   n <- round(n, 0)
@@ -1140,7 +1197,7 @@ lorenz_system <- function(n, init_conditions, dt, snr = Inf) {
 #' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
 #'
 #' @return A numeric matrix representing the system's state over time. Each row
-#'   corresponds to a time point, and each column represents a variable (X, Y, Z).
+#'         corresponds to a time point, and each column represents a variable (X, Y, Z).
 #'
 #' @examples
 #' # Simulate the Rossler system with 1000 time points and no noise
@@ -1152,15 +1209,15 @@ lorenz_system <- function(n, init_conditions, dt, snr = Inf) {
 #'   snr = Inf
 #' )
 #'
-#'
 #' @details
 #' This function simulates the Rossler chaotic system with the specified
 #' parameters. It uses the specified time step and initial conditions to compute
 #' the system's state over time. If a non-Infinite SNR is provided, Gaussian noise
 #' is added to the system.
 #'
-#'
 #' @import deSolve
+#' @importFrom stats sd
+#' @importFrom stats rnorm
 #' @export
 rossler_system <-
   function(n,
@@ -1209,6 +1266,3 @@ rossler_system <-
     # Return x_t
     return(x_t = out)
   }
-
-
-

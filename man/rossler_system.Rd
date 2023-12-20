@@ -23,7 +23,7 @@ rossler_system(n, dt, init_conditions, a, b, c, snr = Inf)
 }
 \value{
 A numeric matrix representing the system's state over time. Each row
-  corresponds to a time point, and each column represents a variable (X, Y, Z).
+        corresponds to a time point, and each column represents a variable (X, Y, Z).
 }
 \description{
 Simulates the Rossler chaotic system with optional noise.
@@ -43,6 +43,5 @@ data <- rossler_system(
   a = 0.2, b = 0.2, c = 5.7,
   snr = Inf
 )
-
 
 }

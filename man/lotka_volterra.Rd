@@ -17,16 +17,16 @@ lotka_volterra(n, init_conditions, dt, snr = Inf)
 }
 \value{
 A numeric matrix representing the system's state over time. Each row
-  corresponds to a time point, and each column represents a variable.
+        corresponds to a time point, and each column represents a variable.
 }
 \description{
 Simulates the Lotka-Volterra predator-prey system with optional noise.
 }
 \details{
-This function simulates the Lotka-Volterra predator-prey system with the specified
-parameters. It uses the specified time step and initial conditions to compute
-the system's state over time. If a non-Infinite SNR is provided, Gaussian noise
-is added to the system.
+This function simulates the Lotka-Volterra predator-prey system with the
+specified parameters. It uses the specified time step and initial conditions
+to compute the system's state over time. If a non-Infinite SNR is provided,
+Gaussian noise is added to the system.
 }
 \examples{
 # Simulate a Lotka-Volterra system with 100 time points and no noise
@@ -36,6 +36,5 @@ data <- lotka_volterra(
   init_conditions = c(2, 1),
   snr = Inf
 )
-
 
 }

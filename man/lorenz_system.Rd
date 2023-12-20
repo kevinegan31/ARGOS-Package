@@ -17,7 +17,7 @@ lorenz_system(n, init_conditions, dt, snr = Inf)
 }
 \value{
 A numeric matrix representing the system's state over time. Each row
-  corresponds to a time point, and each column represents a variable (X, Y, Z).
+        corresponds to a time point, and each column represents a variable (X, Y, Z).
 }
 \description{
 Simulates the Lorenz chaotic system with optional noise.
@@ -36,6 +36,5 @@ data <- lorenz_system(
   init_conditions = c(-8, 7, 27),
   snr = Inf
 )
-
 
 }

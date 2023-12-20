@@ -17,10 +17,11 @@ linear2d_system(n, init_conditions, dt, snr = Inf)
 }
 \value{
 A numeric matrix representing the system's state over time. Each row
-  corresponds to a time point, and each column represents a variable.
+        corresponds to a time point, and each column represents a variable.
 }
 \description{
-Simulates a two-dimensional damped oscillator with linear dynamics and optional noise.
+Simulates a two-dimensional damped oscillator with linear dynamics and optional
+noise.
 }
 \details{
 This function simulates a two-dimensional damped oscillator with linear dynamics.
@@ -31,6 +32,5 @@ the system.
 \examples{
 # Simulate a 2D linear system with 100 time points and no noise
 data <- linear2d_system(n = 100, init_conditions = c(-1, 1), dt = 0.01, snr = Inf)
-
 
 }

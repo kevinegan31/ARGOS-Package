@@ -31,7 +31,7 @@ duffing_oscillator(
 }
 \value{
 A numeric matrix representing the system's state over time. Each row
-  corresponds to a time point, and each column represents a variable.
+        corresponds to a time point, and each column represents a variable.
 }
 \description{
 Simulates the Duffing oscillator with optional noise.
@@ -53,6 +53,5 @@ data <- duffing_oscillator(
   epsilon_value = 5,
   snr = Inf
 )
-
 
 }

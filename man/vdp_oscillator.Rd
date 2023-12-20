@@ -19,7 +19,7 @@ vdp_oscillator(n, dt, init_conditions, mu, snr = Inf)
 }
 \value{
 A numeric matrix representing the system's state over time. Each row
-  corresponds to a time point, and each column represents a variable.
+        corresponds to a time point, and each column represents a variable.
 }
 \description{
 Simulates the Van der Pol oscillator with optional noise.
@@ -39,6 +39,5 @@ data <- vdp_oscillator(
   mu = 1.2,
   snr = Inf
 )
-
 
 }
