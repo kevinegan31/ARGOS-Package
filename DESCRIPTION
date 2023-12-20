@@ -2,11 +2,11 @@ Package: ARGOS
 Type: Package
 Title: Automatic Regression for Governing Equations (ARGOS)
 Version: 0.1.0
-Authors: c(
+Author: c(
     person("Kevin", "Egan", email = "kevin.egan@durham.ac.uk", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9748-8687")),
-    person("Weizhen", "Li", email = "weizhen.li@durham.ac.uk", role = "aut", comment = c(ORCID = "0000-0001-9368-236X")),
-    person("Rui", "Carvalho", email = "rui.carvalho@durham.ac.uk", role = "aut", comment = c(ORCID = "0000-0002-3279-4218")),
-    person("Yuzheng", "Zhang", email = "yuzheng.zhang@durham.ac.uk", role = "aut")
+    person("Weizhen", "Li", email = "weizhen.li@durham.ac.uk", role = "ctb", comment = c(ORCID = "0000-0001-9368-236X")),
+    person("Rui", "Carvalho", email = "rui.carvalho@durham.ac.uk", role = "ctb", comment = c(ORCID = "0000-0002-3279-4218")),
+    person("Yuzheng", "Zhang", email = "yuzheng.zhang@durham.ac.uk", role = "ctb")
     )
 Maintainer: Kevin Egan <kevin.egan@durham.ac.uk>
 Description: Comprehensive set of tools for performing system identification of both linear and nonlinear dynamical systems directly from data. The Automatic Regression for Governing Equations (ARGOS) simplifies the complex task of constructing mathematical models of dynamical systems from observed input and output data, supporting various types of systems, including those described by ordinary differential equations. It employs optimal numerical derivatives for enhanced accuracy and employs formal variable selection techniques to help identify the most relevant variables, thereby enabling the development of predictive models for system behavior analysis.
