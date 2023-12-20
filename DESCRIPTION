@@ -14,12 +14,11 @@ Description: Comprehensive set of tools for performing system identification of 
     observed input and output data, supporting various types of systems, including those described by ordinary 
     differential equations. It employs optimal numerical derivatives for enhanced accuracy and employs formal 
     variable selection techniques to help identify the most relevant variables, thereby enabling the development 
-    of predictive models for system behavior analysis. ARGOS requires `Python` to be installed in order to use `reticulate`.
+    of predictive models for system behavior analysis.
 Depends: 
     R (>= 3.6.0)
 Imports:
   Matrix,
-  reticulate,
   glmnet,
   Metrics,
   boot,

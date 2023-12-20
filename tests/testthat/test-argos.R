@@ -11,7 +11,8 @@ library(ARGOS)  # Ensure this matches the actual name of your package.
 
 # Define common variables that will be used across multiple tests.
 # These variables set up the initial conditions and parameters for the functions being tested.
-x_t <- duffing_oscillator(n_obs=5000, dt = 0.01, init_conditions = c(1, 0), snr = 49)
+x_t <- duffing_oscillator(n=5000, dt = 0.01, init_conditions = c(1, 0),
+                          gamma_value = 0.1, kappa_value = 1, epsilon_value = 5, snr = 49)
 dt <- 0.01
 sg_poly_order <- 4
 library_degree <- 5

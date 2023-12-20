@@ -331,7 +331,7 @@ sg_optimal_combination <- function(x_t, dt = 1, polyorder) {
 #' @examples
 #' # Build a design matrix using the Duffing Oscillator as the state-space.
 #' # Output provides matrix, and derivative matrix monomial orders (needed for running `argos`).
-#' x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), 49)
+#' x_t <- duffing_oscillator(n_obs=5000, 0.01, c(1, 0), gamma_value = 0.1, kappa_value = 1, epsilon_value = 5, snr = 49)
 #' duffing_design_matrix <- build_design_matrix(x_t, dt = 0.01, sg_poly_order = 4,
 #'                                             library_degree = 5, library_type = "poly")
 #' head(duffing_design_matrix$sorted_theta)
@@ -676,3 +676,539 @@ argos <- function(design_matrix,
     )
   )
 }
+#' Cubic 2D System Simulation
+#'
+#' Simulates a two-dimensional damped oscillator with cubic dynamics and optional noise.
+#'
+#' @param n Number of time points (rounded to the nearest integer).
+#' @param init_conditions Initial conditions as a numeric vector of length 2.
+#' @param dt Time step between observations.
+#' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
+#'
+#' @return A numeric matrix representing the system's state over time. Each row
+#'   corresponds to a time point, and each column represents a variable.
+#'
+#' @examples
+#' # Simulate a 2D cubic system with 100 time points and no noise
+#' data <- cubic2d_system(n = 100, init_conditions = c(1, 2), dt = 0.01, snr = Inf)
+#'
+#'
+#' @details
+#' This function simulates a two-dimensional damped oscillator with cubic dynamics.
+#' It uses the specified time step and initial conditions to compute the system's
+#' state over time. If a non-Infinite SNR is provided, Gaussian noise is added to
+#' the system.
+#'
+#'
+#' @import deSolve
+#' @export
+cubic2d_system <- function(n, init_conditions, dt, snr = Inf) {
+  n <- round(n, 0)
+  dt <- dt
+  # n = number of time points rounded to nearest integer
+  # snr = added noise to system (dB)
+  # times: n - 1 to round off total n given to start at t_init = 0
+  times <- seq(0, ((n) - 1) * dt, by = dt)
+  init_conditions <- init_conditions
+  matrix_a <- matrix(c(-0.1, -2,
+                       2, -0.1), 2, 2)
+  cubic2d <- function(t, init_conditions, parameters) {
+    with(as.list(c(init_conditions, parameters)), {
+      dx <- matrix_a[1, 1] * init_conditions[1] ** 3 + matrix_a[1, 2] * init_conditions[2] ** 3
+      dy <- matrix_a[2, 1] * init_conditions[1] ** 3 + matrix_a[2, 2] * init_conditions[2] ** 3
+      list(c(dx, dy))
+    })
+  }
+  out <- ode(y = init_conditions, times = times,
+             func = cubic2d, parms = matrix_a,
+             atol = 1.49012e-8, rtol = 1.49012e-8)[, -1]
+  # Add Noise
+  if (!is.infinite(snr)) {
+    length <- nrow(out) * ncol(out)
+    # Convert to snr voltage (dB)
+    snr_volt <- 10 ^ -(snr / 20)
+    noise_matrix <- snr_volt * matrix(rnorm(length, mean = 0, sd = sd(out)), nrow(out))
+    out <- out + noise_matrix
+  }
+  # Return x_t
+  return(x_t = out)
+}
+#' Linear 2D System Simulation
+#'
+#' Simulates a two-dimensional damped oscillator with linear dynamics and optional noise.
+#'
+#' @param n Number of time points (rounded to the nearest integer).
+#' @param init_conditions Initial conditions as a numeric vector of length 2.
+#' @param dt Time step between observations.
+#' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
+#'
+#' @return A numeric matrix representing the system's state over time. Each row
+#'   corresponds to a time point, and each column represents a variable.
+#'
+#' @examples
+#' # Simulate a 2D linear system with 100 time points and no noise
+#' data <- linear2d_system(n = 100, init_conditions = c(-1, 1), dt = 0.01, snr = Inf)
+#'
+#'
+#' @details
+#' This function simulates a two-dimensional damped oscillator with linear dynamics.
+#' It uses the specified time step and initial conditions to compute the system's
+#' state over time. If a non-Infinite SNR is provided, Gaussian noise is added to
+#' the system.
+#'
+#'
+#' @import deSolve
+#' @export
+linear2d_system <- function(n, init_conditions, dt, snr = Inf) {
+  n <- round(n, 0)
+  dt <- dt
+  snr <- snr
+  # n = number of time points rounded to nearest integer
+  # times: n - 1 to round off total n given that we start at 0
+  times <- seq(0, ((n) - 1) * dt, by = dt)
+  init_conditions <- init_conditions
+  matrix_a <- matrix(c(-0.1, -2,
+                       2, -0.1), 2, 2)
+  linear2d <- function(t, init_conditions, parameters) {
+    with(as.list(c(init_conditions, parameters)), {
+      dx <- matrix_a[1, 1] * init_conditions[1] + matrix_a[1, 2] * init_conditions[2]
+      dy <- matrix_a[2, 1] * init_conditions[1] + matrix_a[2, 2] * init_conditions[2]
+      list(c(dx, dy))
+    })
+  }
+  out <- ode(y = init_conditions, times = times,
+             func = linear2d, parms = matrix_a,
+             atol = 1.49012e-8, rtol = 1.49012e-8)[, -1]
+  # Add Noise
+  if (!is.infinite(snr)) {
+    length <- nrow(out) * ncol(out)
+    # Convert to snr voltage (dB)
+    snr_volt <- 10 ^ -(snr / 20)
+    noise_matrix <- snr_volt * matrix(rnorm(length, mean = 0, sd = sd(out)), nrow(out))
+    out <- out + noise_matrix
+  }
+  # Return x_t
+  return(x_t = out)
+}
+#' Linear 3D System Simulation
+#'
+#' Simulates a three-dimensional linear dynamical system with optional noise.
+#'
+#' @param n Number of time points (rounded to the nearest integer).
+#' @param init_conditions Initial conditions as a numeric vector of length 3.
+#' @param dt Time step between observations.
+#' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
+#'
+#' @return A numeric matrix representing the system's state over time. Each row
+#'   corresponds to a time point, and each column represents a variable.
+#'
+#' @examples
+#' # Simulate a 3D linear system with 100 time points and no noise
+#' data <- linear3d_system(n = 100, init_conditions = c(1, 2, 3), dt = 0.01, snr = Inf)
+#'
+#'
+#' @details
+#' This function simulates a three-dimensional linear dynamical system.
+#' It uses the specified time step and initial conditions to compute the system's
+#' state over time. If a non-Infinite SNR is provided, Gaussian noise is added to
+#' the system.
+#'
+#' @import deSolve
+#' @export
+linear3d_system <- function(n, init_conditions, dt, snr = Inf)  {
+  n <- round(n, 0)
+  dt <- dt
+  # n = number of time points rounded to nearest integer
+  # snr = added noise to system (dB)
+  # times: n - 1 to round off total n given to start at t_init = 0
+  times <- seq(0, ((n) - 1) * dt, by = dt)
+  matrix_a <- matrix(c(-0.1, -2, 0,
+                       2, -0.1, 0,
+                       0, 0, -0.3), 3, 3)
+  init_conditions <- init_conditions
+  linear3d <- function(t, init_conditions, parameters) {
+    with(as.list(c(init_conditions, parameters)), {
+      dx <- matrix_a[1, 1] * init_conditions[1] + matrix_a[1, 2] * init_conditions[2]
+      dy <- matrix_a[2, 1] * init_conditions[1] + matrix_a[2, 2] * init_conditions[2]
+      dz <- matrix_a[3, 3] * init_conditions[3]
+      list(c(dx, dy, dz))
+    })
+  }
+  out <- ode(y = init_conditions, times = times,
+             func = linear3d, parms = matrix_a,
+             atol = 1.49012e-8, rtol = 1.49012e-8)[, -1]
+  # Add Noise
+  if (!is.infinite(snr)) {
+    length <- nrow(out) * ncol(out)
+    # Convert to snr voltage (dB)
+    snr_volt <- 10 ^ -(snr / 20)
+    noise_matrix <- snr_volt * matrix(rnorm(length, mean = 0, sd = sd(out)), nrow(out))
+    out <- out + noise_matrix
+  }
+  # Return x_t
+  return(x_t = out)
+}
+#' Duffing Oscillator
+#'
+#' Simulates the Duffing oscillator with optional noise.
+#'
+#' @param n Number of time points (rounded to the nearest integer).
+#' @param dt Time step between observations.
+#' @param init_conditions Initial conditions as a numeric vector of length 2.
+#' @param gamma_value Value of gamma parameter.
+#' @param kappa_value Value of kappa parameter.
+#' @param epsilon_value Value of epsilon parameter.
+#' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
+#'
+#' @return A numeric matrix representing the system's state over time. Each row
+#'   corresponds to a time point, and each column represents a variable.
+#'
+#' @examples
+#' # Simulate a Duffing oscillator with 100 time points and no noise
+#' data <- duffing_oscillator(
+#'   n = 100,
+#'   dt = 0.01,
+#'   init_conditions = c(2, 6),
+#'   gamma_value = 0.1,
+#'   kappa_value = 1,
+#'   epsilon_value = 5,
+#'   snr = Inf
+#' )
+#'
+#'
+#' @details
+#' This function simulates a Duffing oscillator with the specified parameters.
+#' It uses the specified time step and initial conditions to compute the system's
+#' state over time. If a non-Infinite SNR is provided, Gaussian noise is added to
+#' the system.
+#'
+#' @import deSolve
+#' @export
+duffing_oscillator <-
+  function(n,
+           dt,
+           init_conditions,
+           gamma_value,
+           kappa_value,
+           epsilon_value,
+           snr = Inf) {
+    n <- round(n, 0)
+    dt <- dt
+    # n = number of time points rounded to nearest integer
+    # snr = added noise to system (dB)
+    # times: n - 1 to round off total n given to start at t_init = 0
+    init_conditions <- init_conditions
+    times <- seq(0, ((n) - 1) * dt, by = dt)
+    duff_parameters <- c(gamma_value, kappa_value, epsilon_value)
+    duff_osc <- function(t,
+                         init_conditions,
+                         duff_parameters) {
+      with(as.list(c(init_conditions,
+                     duff_parameters)), {
+                       dx <- init_conditions[2]
+                       dy <-
+                         (-duff_parameters[1] * init_conditions[2]) - (duff_parameters[2] * init_conditions[1]) - (duff_parameters[3] * (init_conditions[1] ^ 3))
+                       list(c(dx, dy))
+                     })
+    }
+    # Oscillator
+    out <- ode(
+      y = init_conditions,
+      func = duff_osc,
+      times = times,
+      parms = duff_parameters,
+      atol = 1.49012e-8,
+      rtol = 1.49012e-8
+    )[, -1]
+    # Add Noise
+    if (!is.infinite(snr)) {
+      length <- nrow(out) * ncol(out)
+      # Convert to snr voltage (dB)
+      snr_volt <- 10 ^ -(snr / 20)
+      noise_matrix <-
+        snr_volt * matrix(rnorm(length, mean = 0, sd = sd(out)), nrow(out))
+      out <- out + noise_matrix
+    }
+    # Return x_t
+    return(x_t = out)
+  }
+#' Van der Pol Oscillator
+#'
+#' Simulates the Van der Pol oscillator with optional noise.
+#'
+#' @param n Number of time points (rounded to the nearest integer).
+#' @param dt Time step between observations.
+#' @param init_conditions Initial conditions as a numeric vector of length 2.
+#' @param mu Parameter controlling the nonlinear damping level of the system.
+#' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
+#'
+#' @return A numeric matrix representing the system's state over time. Each row
+#'   corresponds to a time point, and each column represents a variable.
+#'
+#' @examples
+#' # Simulate a Van der Pol oscillator with 100 time points and no noise
+#' data <- vdp_oscillator(
+#'   n = 100,
+#'   dt = 0.01,
+#'   init_conditions = c(-1, 1),
+#'   mu = 1.2,
+#'   snr = Inf
+#' )
+#'
+#'
+#' @details
+#' This function simulates a Van der Pol oscillator with the specified parameters.
+#' It uses the specified time step and initial conditions to compute the system's
+#' state over time. If a non-Infinite SNR is provided, Gaussian noise is added to
+#' the system.
+#'
+#' @import deSolve
+#' @export
+vdp_oscillator <- function(n, dt, init_conditions, mu, snr = Inf) {
+  n <- round(n, 0)
+  dt <- dt
+  mu <- mu
+  # mu = "negative" resistance of triode passing a small current
+  # n = number of time points rounded to nearest integer
+  # snr = added noise to system (dB)
+  # times: n - 1 to round off total n given to start at t_init = 0
+  init_conditions <- init_conditions
+  times <- seq(0, ((n) - 1) * dt, by = dt)
+  mu <- mu
+  vdpol <- function(t, init_conditions, mu) {
+    with(as.list(c(init_conditions, mu)), {
+      dx <- init_conditions[2]
+      dy <-
+        mu * (1 - ((init_conditions[1]) ^ 2)) * init_conditions[2] - init_conditions[1]
+      list(c(dx, dy))
+    })
+  }
+  out <- ode(
+    y = init_conditions,
+    func = vdpol,
+    times = times,
+    parms = mu,
+    atol = 1.49012e-8,
+    rtol = 1.49012e-8
+  )[,-1]
+  # Add Noise
+  if (!is.infinite(snr)) {
+    length <- nrow(out) * ncol(out)
+    # Convert to snr voltage (dB)
+    snr_volt <- 10 ^ -(snr / 20)
+    noise_matrix <-
+      snr_volt * matrix(rnorm(length, mean = 0, sd = sd(out)), nrow(out))
+    out <- out + noise_matrix
+  }
+  return(x_t = out)
+}
+#' Lotka-Volterra System
+#'
+#' Simulates the Lotka-Volterra predator-prey system with optional noise.
+#'
+#' @param n Number of time points (rounded to the nearest integer).
+#' @param dt Time step between observations.
+#' @param init_conditions Initial conditions as a numeric vector of length 2.
+#' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
+#'
+#' @return A numeric matrix representing the system's state over time. Each row
+#'   corresponds to a time point, and each column represents a variable.
+#'
+#' @examples
+#' # Simulate a Lotka-Volterra system with 100 time points and no noise
+#' data <- lotka_volterra(
+#'   n = 100,
+#'   dt = 0.01,
+#'   init_conditions = c(2, 1),
+#'   snr = Inf
+#' )
+#'
+#'
+#' @details
+#' This function simulates the Lotka-Volterra predator-prey system with the specified
+#' parameters. It uses the specified time step and initial conditions to compute
+#' the system's state over time. If a non-Infinite SNR is provided, Gaussian noise
+#' is added to the system.
+#'
+#'
+#' @import deSolve
+#' @export
+lotka_volterra <- function(n, init_conditions, dt, snr = Inf) {
+  n <- round(n, 0)
+  dt <- dt
+  # n = number of time points rounded to nearest integer
+  # snr = added noise to system (dB)
+  # times: n - 1 to round off total n given to start at t_init = 0
+  parameters <- c(c0 = 1, c1 = -1, c2 = -1, c3 = 1)
+  init_conditions <- init_conditions
+  lv <- function(t, init_conditions, parameters) {
+    with(as.list(c(init_conditions, parameters)), {
+      dx <- (parameters[1] * init_conditions[1]) + (parameters[2] * (init_conditions[1] * init_conditions[2]))
+      dy <- (parameters[3] * init_conditions[2]) + (parameters[4] * (init_conditions[1] * init_conditions[2]))
+      list(c(dx, dy))
+    })
+  }
+  times <- seq(0, ((n) - 1) * dt, by = dt)
+  out <- ode(y = init_conditions, times = times,
+             func = lv, parms = parameters,
+             atol = 1.49012e-8, rtol = 1.49012e-8)[, -1]
+  # Add Noise
+  if (!is.infinite(snr)) {
+    length <- nrow(out) * ncol(out)
+    # Convert to snr voltage (dB)
+    snr_volt <- 10 ^ -(snr / 20)
+    noise_matrix <- snr_volt * matrix(rnorm(length, mean = 0, sd = sd(out)), nrow(out))
+    out <- out + noise_matrix
+  }
+  # Return x_t
+  return(x_t = out)
+}
+#' Lorenz Chaotic System Simulation
+#'
+#' Simulates the Lorenz chaotic system with optional noise.
+#'
+#' @param n Number of time points (rounded to the nearest integer).
+#' @param dt Time step between observations.
+#' @param init_conditions Initial conditions as a numeric vector of length 3 (X, Y, Z).
+#' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
+#'
+#' @return A numeric matrix representing the system's state over time. Each row
+#'   corresponds to a time point, and each column represents a variable (X, Y, Z).
+#'
+#' @examples
+#' # Simulate the Lorenz system with 1000 time points and no noise
+#' data <- lorenz_system(
+#'   n = 1000,
+#'   dt = 0.01,
+#'   init_conditions = c(-8, 7, 27),
+#'   snr = Inf
+#' )
+#'
+#'
+#' @details
+#' This function simulates the Lorenz chaotic system with the specified
+#' parameters. It uses the specified time step and initial conditions to compute
+#' the system's state over time. If a non-Infinite SNR is provided, Gaussian noise
+#' is added to the system.
+#'
+#'
+#' @import deSolve
+#' @export
+lorenz_system <- function(n, init_conditions, dt, snr = Inf) {
+  n <- round(n, 0)
+  dt <- dt
+  # n = number of time points rounded to nearest integer
+  # snr = added noise to system (dB)
+  # times: n - 1 to round off total n given to start at t_init = 0
+  # Lorenz Parameters: sigma, rho, beta
+  parameters <- c(s = 10, r = 28, b = 8 / 3)
+  # init_conditions <- c(X = -8, Y = 7, Z = 27) # Original Initial Conditions
+  init_conditions <- init_conditions
+  lorenz <- function(t, init_conditions, parameters) {
+    with(as.list(c(init_conditions, parameters)), {
+      dx <- parameters[1] * (init_conditions[2] - init_conditions[1])
+      dy <- init_conditions[1] * (parameters[2] - init_conditions[3]) - init_conditions[2]
+      dz <- init_conditions[1] * init_conditions[2] - parameters[3] * init_conditions[3]
+      list(c(dx, dy, dz))
+    })
+  }
+  times <- seq(0, ((n) - 1) * dt, by = dt)
+  out <- ode(y = init_conditions, times = times,
+             func = lorenz, parms = parameters,
+             atol = 1.49012e-8, rtol = 1.49012e-8)[, -1]
+  # Add Noise
+  if (!is.infinite(snr)) {
+    length <- nrow(out) * ncol(out)
+    # Convert to snr voltage (dB)
+    snr_volt <- 10 ^ -(snr / 20)
+    noise_matrix <- snr_volt * matrix(rnorm(length, mean = 0, sd = sd(out)), nrow(out))
+    out <- out + noise_matrix
+  }
+  # Return x_t
+  return(x_t = out)
+}
+#' Rossler Chaotic System Simulation
+#'
+#' Simulates the Rossler chaotic system with optional noise.
+#'
+#' @param n Number of time points (rounded to the nearest integer).
+#' @param dt Time step between observations.
+#' @param init_conditions Initial conditions as a numeric vector of length 3 (X, Y, Z).
+#' @param a Rossler parameter 1
+#' @param b Rossler parameter 2
+#' @param c Rossler parameter 3
+#' @param snr Signal-to-noise ratio (in dB). Use Inf for no noise.
+#'
+#' @return A numeric matrix representing the system's state over time. Each row
+#'   corresponds to a time point, and each column represents a variable (X, Y, Z).
+#'
+#' @examples
+#' # Simulate the Rossler system with 1000 time points and no noise
+#' data <- rossler_system(
+#'   n = 1000,
+#'   dt = 0.01,
+#'   init_conditions = c(0, 2, 0),
+#'   a = 0.2, b = 0.2, c = 5.7,
+#'   snr = Inf
+#' )
+#'
+#'
+#' @details
+#' This function simulates the Rossler chaotic system with the specified
+#' parameters. It uses the specified time step and initial conditions to compute
+#' the system's state over time. If a non-Infinite SNR is provided, Gaussian noise
+#' is added to the system.
+#'
+#'
+#' @import deSolve
+#' @export
+rossler_system <-
+  function(n,
+           dt,
+           init_conditions,
+           a, b, c,
+           snr = Inf) {
+    n <- round(n, 0)
+    dt <- dt
+    # n = number of time points rounded to nearest integer
+    # snr = added noise to system (dB)
+    # times: n - 1 to round off total n given to start at t_init = 0
+    init_conditions <- init_conditions
+    times <- seq(0, ((n) - 1) * dt, by = dt)
+    rossler_parameters <- c(a, b, c)
+    rossler <- function(t,
+                        init_conditions,
+                        rossler_parameters) {
+      with(as.list(c(init_conditions,
+                     rossler_parameters)), {
+                       dx <- -init_conditions[2] - init_conditions[3]
+                       dy <-
+                         init_conditions[1] + (rossler_parameters[1] * init_conditions[2])
+                       dz <-
+                         rossler_parameters[2] + (init_conditions[3] * (init_conditions[1] - rossler_parameters[3]))
+                       list(c(dx, dy, dz))
+                     })
+    }
+    out <- ode(
+      y = init_conditions,
+      func = rossler,
+      times = times,
+      parms = rossler_parameters,
+      atol = 1.49012e-8,
+      rtol = 1.49012e-8
+    )[,-1]
+    # Add Noise
+    if (!is.infinite(snr)) {
+      length <- nrow(out) * ncol(out)
+      # Convert to snr voltage (dB)
+      snr_volt <- 10 ^ -(snr / 20)
+      noise_matrix <-
+        snr_volt * matrix(rnorm(length, mean = 0, sd = sd(out)), nrow(out))
+      out <- out + noise_matrix
+    }
+    # Return x_t
+    return(x_t = out)
+  }
+
+
+
