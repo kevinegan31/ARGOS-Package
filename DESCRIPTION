@@ -4,7 +4,9 @@ Title: Automatic Regression for Governing Equations (ARGOS)
 Version: 0.1.0
 Authors@R: c(
     person("Kevin", "Egan", email = "kevin.egan@durham.ac.uk", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9748-8687")),
-    person("Weizhen", "Li", email = "weizhen.li@durham.ac.uk", role = "aut", comment = c(ORCID = "0000-0001-9368-236X"))
+    person("Weizhen", "Li", email = "weizhen.li@durham.ac.uk", role = "aut", comment = c(ORCID = "0000-0001-9368-236X")),
+    person("Rui", "Carvalho", email = "rui.carvalho@durham.ac.uk", role = "aut", comment = c(ORCID = "0000-0002-3279-4218")),
+    person("Yuzheng", "Zhang", email = "yuzheng.zhang@durham.ac.uk", role = "aut")
     )
 Maintainer: Kevin Egan <kevin.egan@durham.ac.uk>
 Description: Comprehensive set of tools for performing system identification of both linear and nonlinear dynamical systems directly from data. 
