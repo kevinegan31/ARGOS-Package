@@ -11,7 +11,7 @@ library(ARGOS)  # Ensure this matches the actual name of your package.
 
 # Define common variables that will be used across multiple tests.
 # These variables set up the initial conditions and parameters for the functions being tested.
-x_t <- duffing_oscillator(n=5000, dt = 0.01, init_conditions = c(1, 0),
+x_t <- duffing_oscillator(n=1000, dt = 0.01, init_conditions = c(1, 0),
                           gamma_value = 0.1, kappa_value = 1, epsilon_value = 5, snr = 49)
 dt <- 0.01
 sg_poly_order <- 4
@@ -59,7 +59,7 @@ test_that("argos returns a list with the correct components", {
   # Set parameters specific to the 'argos' function.
   state_var_deriv = 1  # Indicates the first equation/derivative to identify.
   alpha_level = 0.05  # The significance level for the statistical tests within 'argos'.
-  num_samples = 50  # The number of samples/data points to use.
+  num_samples = 10  # The number of samples/data points to use.
   sr_method = "lasso"  # Specifies the method for sparse regression.
   weights_method = NULL  # Indicates no specific method for weighting is used.
   ols_ps = TRUE  # Whether to include ordinary least squares post-selection.

@@ -546,7 +546,7 @@ build_design_matrix <- function(x_t,
 #' @examples
 #' # Identify the x1 equation of the Duffing Oscillator with ARGOS.
 #' # Output provides point estimates, confidence intervals, and identified model.
-#' x_t <- duffing_oscillator(n=5000, dt = 0.01,
+#' x_t <- duffing_oscillator(n=1000, dt = 0.01,
 #'                           init_conditions = c(1, 0),
 #'                           gamma_value = 0.1, kappa_value = 1,
 #'                           epsilon_value = 5, snr = 49)
