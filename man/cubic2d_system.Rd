@@ -2,7 +2,7 @@
 % Please edit documentation in R/argos_files.R
 \name{cubic2d_system}
 \alias{cubic2d_system}
-\title{Cubic 2D System Simulation}
+\title{Cubic 2D System}
 \usage{
 cubic2d_system(n, init_conditions, dt, snr = Inf)
 }

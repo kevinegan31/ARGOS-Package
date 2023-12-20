@@ -2,7 +2,7 @@
 % Please edit documentation in R/argos_files.R
 \name{lorenz_system}
 \alias{lorenz_system}
-\title{Lorenz Chaotic System Simulation}
+\title{Lorenz Chaotic System}
 \usage{
 lorenz_system(n, init_conditions, dt, snr = Inf)
 }

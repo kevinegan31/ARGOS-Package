@@ -2,7 +2,7 @@
 % Please edit documentation in R/argos_files.R
 \name{rossler_system}
 \alias{rossler_system}
-\title{Rossler Chaotic System Simulation}
+\title{Rossler Chaotic System}
 \usage{
 rossler_system(n, dt, init_conditions, a, b, c, snr = Inf)
 }

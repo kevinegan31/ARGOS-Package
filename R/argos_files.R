@@ -728,7 +728,7 @@ argos <- function(design_matrix,
     )
   )
 }
-#' Cubic 2D System Simulation
+#' Cubic 2D System
 #'
 #' Simulates a two-dimensional damped oscillator with cubic dynamics and optional
 #' noise.
@@ -786,7 +786,7 @@ cubic2d_system <- function(n, init_conditions, dt, snr = Inf) {
   # Return x_t
   return(x_t = out)
 }
-#' Linear 2D System Simulation
+#' Linear 2D System
 #'
 #' Simulates a two-dimensional damped oscillator with linear dynamics and optional
 #' noise.
@@ -844,7 +844,7 @@ linear2d_system <- function(n, init_conditions, dt, snr = Inf) {
   # Return x_t
   return(x_t = out)
 }
-#' Linear 3D System Simulation
+#' Linear 3D System
 #'
 #' Simulates a three-dimensional linear dynamical system with optional noise.
 #'
@@ -1120,7 +1120,7 @@ lotka_volterra <- function(n, init_conditions, dt, snr = Inf) {
   # Return x_t
   return(x_t = out)
 }
-#' Lorenz Chaotic System Simulation
+#' Lorenz Chaotic System
 #'
 #' Simulates the Lorenz chaotic system with optional noise.
 #'
@@ -1184,7 +1184,7 @@ lorenz_system <- function(n, init_conditions, dt, snr = Inf) {
   # Return x_t
   return(x_t = out)
 }
-#' Rossler Chaotic System Simulation
+#' Rossler Chaotic System
 #'
 #' Simulates the Rossler chaotic system with optional noise.
 #'

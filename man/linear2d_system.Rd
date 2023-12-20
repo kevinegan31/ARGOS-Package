@@ -2,7 +2,7 @@
 % Please edit documentation in R/argos_files.R
 \name{linear2d_system}
 \alias{linear2d_system}
-\title{Linear 2D System Simulation}
+\title{Linear 2D System}
 \usage{
 linear2d_system(n, init_conditions, dt, snr = Inf)
 }
