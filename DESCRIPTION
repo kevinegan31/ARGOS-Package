@@ -1,7 +1,7 @@
 Package: ARGOS
 Type: Package
 Title: Automatic Regression for Governing Equations (ARGOS)
-Version: 0.1.0
+Version: 0.1.1
 Authors@R:
   c(person(given = "Kevin",
            family = "Egan",
