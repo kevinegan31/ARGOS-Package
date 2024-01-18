@@ -385,7 +385,6 @@ build_design_matrix <- function(x_t,
   xdot_filtered <- list()
   # Filter x_t
   for (i in 1:num_columns) {
-    if (x_t[1, i]) {
       sg_combinations <- sg_optimal_combination(x_t[, i],
                                                 dt,
                                                 polyorder = sg_poly_order)[[2]]
@@ -403,7 +402,6 @@ build_design_matrix <- function(x_t,
         m = 1,
         ts = dt
       )
-    }
   }
   # Combine filtered data and derivatives
   x_t <- do.call(cbind, x_filtered)
