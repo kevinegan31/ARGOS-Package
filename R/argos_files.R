@@ -19,7 +19,6 @@
 #' @export
 #' @import Matrix
 #' @import glmnet
-#' @import tidyverse
 #' @importFrom stats lm
 #' @importFrom stats coef
 #' @importFrom stats as.formula
@@ -279,7 +278,6 @@ alasso <-
 #'
 #' @export
 #' @import signal
-#' @import tidyverse
 #' @importFrom tidyr expand_grid
 sg_optimal_combination <- function(x_t, dt = 1, polyorder) {
   ### Create Combinations
@@ -305,19 +303,19 @@ sg_optimal_combination <- function(x_t, dt = 1, polyorder) {
         window_length <- seq(5, wl_max, by = 2)
       }
     }
-    sg_combinations <- expand_grid(polyorder, window_length) %>%
-      subset(window_length > polyorder + 7 - polyorder %% 2) %>%
-      as.matrix()
+    sg_combinations <- expand_grid(polyorder, window_length)
+    sg_combinations <-  subset(sg_combinations, window_length > polyorder + 7 - polyorder %% 2)
+    sg_combinations <-  as.matrix(sg_combinations)
     if (nrow(sg_combinations) == 1) {
       sg_combinations <- cbind(4, 13)
     }
   }
   ### Determine MSE for Combinations
   mse_xt <- sapply(seq_len(nrow(sg_combinations)), function(i) {
-    x_t_smoothed <- x_t %>% sgolayfilt(p = sg_combinations[i, 1],
-                                       n = sg_combinations[i, 2],
-                                       m = 0,
-                                       ts = dt)
+    x_t_smoothed <- sgolayfilt(x_t, p = sg_combinations[i, 1],
+                               n = sg_combinations[i, 2],
+                               m = 0,
+                               ts = dt)
     Metrics::mse(x_t, x_t_smoothed)
   })
 
@@ -370,7 +368,6 @@ sg_optimal_combination <- function(x_t, dt = 1, polyorder) {
 #'                              library_degree = 5, library_type = "poly")
 #' head(duffing_design_matrix$sorted_theta)
 #' @importFrom signal sgolayfilt
-#' @importFrom magrittr %>%
 #' @importFrom stats polym
 build_design_matrix <- function(x_t,
                                 dt = 1,
@@ -414,9 +411,8 @@ build_design_matrix <- function(x_t,
   ### x_t needs to be in reverse order because of how poly function expands
   ### We do this here so that we can use it for the for loop to determine
   ### optimal SG parameters
-  out_sorted <- x_t %>%
-    data.frame() %>%
-    rev()
+  out_sorted <- rev(data.frame(x_t))
+
   if (library_type == "poly" | library_type == "poly_four") {
     # Polynomial Expansion
     expanded_theta <- polym(as.matrix(out_sorted),
@@ -575,9 +571,7 @@ build_design_matrix <- function(x_t,
 #' perform_argos$ci
 #' perform_argos$identified_model
 #' @import boot
-#' @import tidyverse
 #' @importFrom stats polym
-#' @importFrom magrittr `%>%`
 argos <- function(design_matrix,
                   library_type = c("poly", "four", "poly_four"),
                   state_var_deriv = 1,
