@@ -1,5 +1,9 @@
 # ARGOS: Automatic Regression for Governing Equations
 
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/ARGOS)](https://CRAN.R-project.org/package=ARGOS)
+<!-- badges: end -->
+
 An R package for the identification of dynamical systems.
 
 ## Overview
@@ -28,4 +32,4 @@ By combining optimal numerical derivatives with formal variable selection proced
 
 ## Getting Started
 
-1. **Installation**: Install the package as such: `r install.packages("ARGOS")`.
+1. **Installation**: Install the package as such: `install.packages("ARGOS")`.

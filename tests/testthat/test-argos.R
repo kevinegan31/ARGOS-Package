@@ -28,7 +28,7 @@ test_that("build_design_matrix returns data with correct structure", {
                                 library_type = library_type)
 
   # Verify that the result is a list, as expected.
-  expect_is(result, "list")
+  expect_type(result, "list")
 
   # Check that the list contains specific components/names.
   # Replace these with the actual names expected based on your function's implementation.
@@ -79,7 +79,7 @@ test_that("argos returns a list with the correct components", {
                          ncpus = ncpus)
 
   # Verify that the result is a list, as expected.
-  expect_is(perform_argos, "list")
+  expect_type(perform_argos, "list")
 
   # Check that the list contains specific components/names.
   # Replace these with the actual names expected based on your function's implementation.
